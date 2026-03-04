@@ -7,23 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ContaBancariaTest {
 
     @Test
-    void deveRealizarDepositoValido() {
-        // Arrange
+    void depositoValido() {
         ContaBancaria conta = new ContaBancaria();
-
-        // Act
         conta.depositar(100.0);
-
-        // Assert
         assertEquals(100.0, conta.getSaldo());
     }
 
     @Test
-    void naoDevePermitirDepositoInvalido() {
-        // Arrange
+    void depositoInvalido() {
         ContaBancaria conta = new ContaBancaria();
-
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> conta.depositar(-100.0));
     }
 
@@ -41,4 +33,15 @@ class ContaBancariaTest {
         ContaBancaria conta = new ContaBancaria();
         assertThrows(IllegalArgumentException.class,() -> conta.sacar(90));
     }
+
+    @Test
+    void testeDeOperacoes(){
+        ContaBancaria conta = new ContaBancaria();
+        conta.depositar(37.89);
+        conta.sacar(6.37);
+        assertEquals(31.52, conta.getSaldo(), 0.001);
+        conta.depositar(100);
+        assertThrows(IllegalArgumentException.class, () -> conta.sacar(133));
+    }
+
 }
